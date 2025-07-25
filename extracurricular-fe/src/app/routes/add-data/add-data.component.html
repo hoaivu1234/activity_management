@@ -1,0 +1,126 @@
+<div style="height: 90vh; overflow: auto">
+  <nz-card nzTitle="Khối lượng giảng dạy">
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      nzAction="https://localhost:7286/api/teacher/import"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <span nz-icon nzType="upload" style="color: #286090"></span>
+      </p>
+      <p class="ant-upload-text">
+        Kéo thả hoặc click chuột vào đây để tải tài liệu lên
+      </p>
+    </nz-upload>
+    <app-button-base
+      style="padding-top: 8px"
+      class="mr-2 float-left"
+      [buttonType]="'primary'"
+      text="Tải tập tin mẫu"
+      iconType="download"
+      (onClick)="downloadTemplateTeacher()"
+    >
+    </app-button-base>
+  </nz-card>
+
+  <nz-card nzTitle="Nhóm chuyên môn">
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      nzAction="https://localhost:7286/api/professional-group/import"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <span nz-icon nzType="upload" style="color: #286090"></span>
+      </p>
+      <p class="ant-upload-text">
+        Kéo thả hoặc click chuột vào đây để tải tài liệu lên
+      </p>
+    </nz-upload>
+    <app-button-base
+      style="padding-top: 8px"
+      class="mr-2 float-left"
+      [buttonType]="'primary'"
+      text="Tải tập tin mẫu"
+      iconType="download"
+      (onClick)="downloadTemplateProfessional()"
+    >
+    </app-button-base>
+  </nz-card>
+
+  <nz-card nzTitle="Danh sách lớp học">
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      nzAction="https://localhost:7286/api/class/import"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <span nz-icon nzType="upload" style="color: #286090"></span>
+      </p>
+      <p class="ant-upload-text">
+        Kéo thả hoặc click chuột vào đây để tải tài liệu lên
+      </p>
+    </nz-upload>
+    <app-button-base
+      style="padding-top: 8px"
+      class="mr-2 float-left"
+      [buttonType]="'primary'"
+      text="Tải tập tin mẫu"
+      iconType="download"
+      (onClick)="downloadTemplateClass()"
+    >
+    </app-button-base>
+  </nz-card>
+
+  <nz-card nzTitle="Danh sách đồ án">
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      nzAction="https://localhost:7286/api/project/import"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <span nz-icon nzType="upload" style="color: #286090"></span>
+      </p>
+      <p class="ant-upload-text">
+        Kéo thả hoặc click chuột vào đây để tải tài liệu lên
+      </p>
+    </nz-upload>
+    <app-button-base
+      style="padding-top: 8px"
+      class="mr-2 float-left"
+      [buttonType]="'primary'"
+      text="Tải tập tin mẫu"
+      iconType="download"
+      (onClick)="downloadTemplateProject()"
+    >
+    </app-button-base>
+  </nz-card>
+
+  <nz-card nzTitle="Nguyện vọng">
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      nzAction="https://localhost:7286/api/aspiration/import"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <span nz-icon nzType="upload" style="color: #286090"></span>
+      </p>
+      <p class="ant-upload-text">
+        Kéo thả hoặc click chuột vào đây để tải tài liệu lên
+      </p>
+    </nz-upload>
+    <app-button-base
+      style="padding-top: 8px"
+      class="mr-2 float-left"
+      [buttonType]="'primary'"
+      text="Tải tập tin mẫu"
+      iconType="download"
+      (onClick)="downloadTemplateAspiration()"
+    >
+    </app-button-base>
+  </nz-card>
+</div>

@@ -1,0 +1,140 @@
+<div style="height: 90vh">
+  <div class="breadcrumb-container">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a>QUẢN LÝ DỮ LIỆU</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item> Quản lý giảng viên </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="filter-container">
+    <div nz-row nzGutter="16">
+      <div nz-col nzSpan="6">
+        <nz-select
+          class="w-100"
+          nzMode="tags"
+          nzPlaceHolder="Tìm kiếm theo tên hoặc mã"
+          [(ngModel)]="request.listTextSearch"
+          (ngModelChange)="nzOnSearch($event)"
+        >
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-select
+          class="w-100"
+          [(ngModel)]="mode"
+          (ngModelChange)="handleChangeModeView($event)"
+          nzAllowClear="false"
+        >
+          <nz-option
+            *ngFor="let item of listModeView"
+            [nzValue]="item.value"
+            [nzLabel]="item.label"
+          >
+          </nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="14" class="d-flex justify-content-end">
+        <app-button-base
+          iconClass="fa-solid fa-rotate-right"
+          titleTooltip="Tải lại"
+          [isShowTooltip]="true"
+          (onClick)="handleReload($event)"
+        >
+        </app-button-base>
+      </div>
+    </div>
+  </div>
+  <div class="table-container pt-2">
+    <nz-table
+      #basicTable
+      [nzData]="listOfData"
+      [nzBordered]="false"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+      [nzScroll]="{ y: scrollY }"
+      [nzFooter]="footer"
+      [nzLoading]="isLoadingTable"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="10%">Mã giảng viên</th>
+          <th nzWidth="15%">Tên giảng viên</th>
+          <th *ngIf="mode === 'specialty'" class="text-center" nzWidth="auto">
+            Nhóm chuyên môn
+          </th>
+          <th *ngIf="mode === 'subject'" class="text-center" nzWidth="auto">
+            Môn học có thể dạy
+          </th>
+          <th class="text-center" nzWidth="12%">GD giảng dạy</th>
+          <th class="text-center" nzWidth="14%">GD hướng dẫn đồ án</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td class="text-center">{{ data?.code }}</td>
+          <td>{{ data?.name }}</td>
+          <td *ngIf="mode === 'specialty'">
+            <ng-container
+              *ngFor="let item of data.professionalGroup; let i = index"
+            >
+              <span class="specialty-tag custom-boder">{{
+                item?.name.trim()
+              }}</span>
+              <ng-container *ngIf="i < data.professionalGroup.length - 1"
+                >,
+              </ng-container>
+            </ng-container>
+          </td>
+          <td *ngIf="mode === 'subject'">
+            <ng-container
+              *ngFor="let item of data.professionalGroup; let i = index"
+            >
+              <ng-container
+                *ngFor="let itemChild of item.listCourse; let j = index"
+              >
+                <span class="specialty-tag custom-boder">{{
+                  itemChild?.name.trim()
+                }}</span>
+                <ng-container *ngIf="i < item.listCourse.length - 1"
+                  >,
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </td>
+          <td class="text-center">{{ data?.gdTeaching }}</td>
+          <td class="text-center">{{ data?.gdInstruct }}</td>
+          <!-- <td>
+            <div class="d-flex justify-content-center">
+              <app-button-base
+                titleTooltip="Sửa"
+                iconClass="fa-solid fa-pen-to-square"
+                tooltipPlacement="topRight"
+                [isShowTooltip]="true"
+              >
+              </app-button-base>
+              <app-button-base
+                titleTooltip="Xóa"
+                [danger]="true"
+                iconClass="far fa-trash-alt"
+                tooltipPlacement="topRight"
+                [isShowTooltip]="true"
+              >
+              </app-button-base>
+            </div>
+          </td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <ng-template #footer>
+    <app-footer-table
+      [size]="request.size"
+      [page]="request.page"
+      [total]="total"
+      (onPageIndexChange)="nzPageIndexChange($event)"
+    ></app-footer-table>
+  </ng-template>
+</div>

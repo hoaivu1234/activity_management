@@ -1,0 +1,208 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a href="https://ng.ant.design/" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo" />
+        <h5>Trường ĐH Bách Khoa HN</h5>
+      </a>
+    </div>
+    <ul nz-menu nzMode="inline">
+      <li
+        *ngIf="userRole != 'admin'"
+        nz-menu-item
+        class="d-flex align-items-center"
+        (click)="closeAllSubmenus()"
+      >
+        <span nz-icon nzType="dashboard"></span>
+        <span><a routerLink="/dashboard">TRANG CHỦ</a></span>
+      </li>
+      <li
+        *ngIf="userRole == 'lanhdao' || userRole == 'admin'"
+        nz-menu-item
+        class="d-flex align-items-center"
+        (click)="closeAllSubmenus()"
+      >
+        <span nz-icon nzType="file-add"></span>
+        <span><a routerLink="lecturer/import-data"></a>THÊM DỮ LIỆU </span>
+      </li>
+      <li
+        *ngIf="userRole == 'lanhdao' || userRole == 'admin'"
+        nz-menu-item
+        class="d-flex align-items-center"
+        (click)="closeAllSubmenus()"
+      >
+        <span nz-icon nzType="build"></span>
+        <span><a routerLink="lecturer/assignment"></a>PHÂN CÔNG GIẢNG DẠY</span>
+      </li>
+      <li
+        *ngIf="userRole != 'lanhdao' && userRole != 'admin'"
+        nz-menu-item
+        class="d-flex align-items-center"
+        (click)="closeAllSubmenus()"
+      >
+        <span nz-icon nzType="schedule"></span>
+        <span><a routerLink="lecturer/teacher-calendar"></a>LỊCH LÀM VIỆC </span>
+      </li>
+      <li
+        nz-submenu
+        nzTitle="QUẢN LÝ DỮ LIỆU"
+        nzIcon="home"
+        [nzOpen]="activeMenu === 'management'"
+        (nzOpenChange)="toggleMenu('management')"
+      >
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/lecturer-management">Quản lý giảng viên</a>
+          </li>
+          <li
+            *ngIf="userRole == 'lanhdao' || userRole == 'admin'"
+            nz-menu-item
+            nzMatchRouter
+          >
+            <a routerLink="lecturer/project-management">Quản lý đồ án</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/aspiration-management"
+              >Quản lý nguyện vọng</a
+            >
+          </li>
+          <li
+            *ngIf="userRole == 'lanhdao' || userRole == 'admin'"
+            nz-menu-item
+            nzMatchRouter
+          >
+            <a routerLink="lecturer/professional-group-management"
+              >Quản lý nhóm chuyên môn</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/class-management">Quản lý thời khóa biểu</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/list-criteria">Cấu hình ràng buộc</a>
+          </li>
+        </ul>
+      </li>
+      <li
+        *ngIf="userRole != 'admin'"
+        nz-submenu
+        nzTitle="KẾT QUẢ PHÂN CÔNG"
+        nzIcon="solution"
+        [nzOpen]="activeMenu === 'assignment'"
+        (nzOpenChange)="toggleMenu('assignment')"
+      >
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/teaching-assignment">Giảng dạy</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/project-assignment">Hướng dẫn đồ án</a>
+          </li>
+        </ul>
+      </li>
+      <li
+        nz-submenu
+        *ngIf="userRole == 'lanhdao'"
+        nzTitle="KIỂM TRA PHÂN CÔNG"
+        nzIcon="verified"
+        [nzOpen]="activeMenu === 'check'"
+        (nzOpenChange)="toggleMenu('check')"
+      >
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/check-assignment">Kiểm tra phân công</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/teacher-not-class"
+              >Giảng viên chưa được phân công giảng dạy</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/teaching-not-assignment"
+              >Lớp chưa được phân công</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/teacher-not-aspiration"
+              >Giảng viên chưa được phân công hướng dẫn đồ án</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="lecturer/project-not-assignment"
+              >Đồ án chưa được phân công</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li
+        *ngIf="userRole != 'admin'"
+        nz-menu-item
+        class="d-flex align-items-center"
+        (click)="closeAllSubmenus()"
+      >
+        <span nz-icon nzType="comment"></span>
+        <span
+          ><a routerLink="lecturer/feedback-management"></a>QUẢN LÝ PHẢN
+          HỒI</span
+        >
+      </li>
+      <li
+        nz-menu-item
+        class="d-flex align-items-center"
+        (click)="closeAllSubmenus()"
+      >
+        <span nz-icon nzType="setting"></span>
+        <span>TÀI KHOẢN</span>
+      </li>
+    </ul>
+    <!-- <router-outlet></router-outlet> -->
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i
+            class="trigger no-hover"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
+        </span>
+        <h5>
+          HỆ THỐNG QUẢN LÝ ĐĂNG KÝ THAM GIA HOẠT ĐỘNG NGOẠI KHÓA
+        </h5>
+        <div class="d-flex" style="margin-right: 32px">
+          <nz-badge style="padding-right: 36px" [nzCount]="listOfData.length">
+            <i style="color: #fff" class="fa-regular fa-bell"></i>
+          </nz-badge>
+          <nz-avatar
+            nz-dropdown
+            [nzDropdownMenu]="menu"
+            nzSize="small"
+            nzIcon="user"
+            style="margin-bottom: 6px"
+          ></nz-avatar>
+          <p style="padding-left: 8px; margin-top: 4px">{{ userName }}</p>
+        </div>
+      </div>
+    </nz-header>
+    <!-- Dropdown Menu -->
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <!-- <li nz-menu-item>Thông tin tài khoản</li> -->
+        <li nz-menu-item (click)="logout()">Đăng xuất</li>
+      </ul>
+    </nz-dropdown-menu>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

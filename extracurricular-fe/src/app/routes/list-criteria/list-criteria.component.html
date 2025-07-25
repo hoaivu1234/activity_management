@@ -1,0 +1,92 @@
+<div style="height: 90vh">
+  <div class="breadcrumb-container">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a>Kiểm tra phân công</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item> Kiểm tra phân công </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="filter-container">
+    <div nz-row nzGutter="16">
+      <div nz-col nzSpan="8">
+        <nz-select
+          class="w-100"
+          nzMode="tags"
+          [nzMaxTagCount]="1"
+          nzPlaceHolder="Chọn tiêu chí kiểm tra"
+          [(ngModel)]="selectedCriteria"
+        >
+          <nz-option
+            *ngFor="let criteria of criteriaList"
+            [nzValue]="criteria.value"
+            [nzLabel]="criteria.label"
+          ></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="4">
+        <app-button-base
+          iconClass="fa-solid fa-magnifying-glass-chart"
+          text="Kiểm tra phân công"
+          (onClick)="performCheck()"
+        >
+        </app-button-base>
+      </div>
+      <div nz-col nzSpan="12" class="d-flex justify-content-end">
+        <app-button-base
+          iconClass="fa-solid fa-rotate-right"
+          titleTooltip="Tải lại"
+          [isShowTooltip]="true"
+          (onClick)="handleReload($event)"
+        >
+        </app-button-base>
+      </div>
+    </div>
+  </div>
+  <div class="table-container pt-2">
+    <nz-table
+      #basicTable
+      [nzData]="paginatedData"
+      [nzBordered]="false"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+      [nzScroll]="{ y: scrollY }"
+      [nzLoading]="isLoadingTable"
+      [nzFooter]="footer"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="15%">Mã giảng viên</th>
+          <th nzWidth="20%">Tên giảng viên</th>
+          <th nzWidth="auto">Chi tiết lỗi</th>
+          <th nzWidth="15%">Xem chi tiết</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data?.code }}</td>
+          <td>{{ data?.name }}</td>
+          <td>{{ data?.message }}</td>
+          <td>
+            <app-button-base
+              iconClass="fa-solid fa-up-right-from-square"
+              isShowTooltip="true"
+              titleTooltip="Xem chi tiết"
+              (onClick)="handleChange(data.code)"
+            >
+            </app-button-base>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <ng-template #footer>
+    <app-footer-table
+      [size]="pageSize"
+      [page]="currentPage"
+      [total]="total"
+      (onPageIndexChange)="nzPageIndexChange1($event)"
+    ></app-footer-table>
+  </ng-template>
+</div>
